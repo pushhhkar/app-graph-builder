@@ -1,73 +1,135 @@
-# React + TypeScript + Vite
+# 🧩 App Graph Builder — Assignment Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a small React + Vite application that allows a user to:
 
-Currently, two official plugins are available:
+- Select an application type (Golang / Java / Python)
+- Automatically load a mock service graph from an API
+- View graph nodes rendered in a ReactFlow canvas
+- Inspect node details in a right-side panel
+- Handle selections using global state (Zustand)
+- Fetch data using React Query
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Feature | Library |
+|--------|---------|
+UI Framework | **React + TypeScript**
+Bundler | **Vite**
+State Management | **Zustand**
+Data Fetching | **@tanstack/react-query**
+Graph Rendering | **@xyflow/react (ReactFlow v12)**
+Styling | **TailwindCSS**
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📂 Project Structure
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+src/
+├─ api/
+│ └─ mockApi.ts # Fake backend API for apps + graph
+├─ hooks/
+│ ├─ useApps.ts # React Query hook for application list
+│ └─ useAppGraph.ts # React Query hook for node/edge graph
+├─ store/
+│ └─ uiStore.ts # Zustand global UI state
+├─ components/
+│ ├─ layout/
+│ │ ├─ TopBar.tsx
+│ │ ├─ LeftRail.tsx
+│ │ └─ RightPanel.tsx
+│ └─ canvas/
+│ └─ CanvasArea.tsx
+├─ App.tsx # UI layout (3-column)
+└─ main.tsx # App entry (React Query + Providers)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+yaml
+Copy code
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠 Features Implemented
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### ✔ Application Selection
+- App list fetched from mock API
+- Zustand stores selected app
+- Active button highlighted
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### ✔ Graph Loading State
+When user selects an app:
+
+Loading graph...
+
+csharp
+Copy code
+
+Then graph data is fetched.
+
+### ✔ Graph State
+Nodes & edges stored using:
+
+```ts
+useNodesState()
+useEdgesState()
+✔ Node Inspector (Right Panel)
+Displays:
+
+Node ID
+
+Label
+
+Status Badge (Healthy / Degraded / Down)
+
+Value slider (read-only)
+
+✔ Mock API Simulation
+Fake delay added to simulate backend:
+
+ts
+Copy code
+setTimeout(() => resolve({ nodes, edges }), 600)
+▶️ Running the Project
+bash
+Copy code
+npm install
+npm run dev
+Local development runs at:
+
+dts
+Copy code
+http://localhost:5173
+🎯 Stretch Goals (Optional Enhancements)
+These can be added later:
+
+Editable slider to update node values
+
+Dynamic status coloring
+
+CPU / Memory tab per node
+
+Draggable node repositioning
+
+Persisting graph updates
+
+📦 What This Assignment Demonstrates
+State management across components
+
+Query-based asynchronous fetch
+
+UI composition using flexbox layouts
+
+TypeScript component design
+
+Clean folder organization
+
+Readable front-end architecture
+
+🏁 Conclusion
+This project satisfies the assignment by showing:
+
+✓ App selection
+✓ Graph fetching
+✓ UI layout with 3 panels
+✓ Node inspector
+✓ Proper use of Zustand + React Query
